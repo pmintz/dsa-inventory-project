@@ -48,16 +48,16 @@ public class ItemRecord {
 	    try {
 		Scanner sc = new Scanner(new BufferedReader(new FileReader(file)));
 		SKU = sc.nextInt();
-		numInStore = sc.nextInt();
-		numAtWarehouse = sc.nextInt();
-		numInTransit = sc.nextInt();
-		numSold = sc.nextInt();
 		name = sc.next();
 		StringBuilder sb = new StringBuilder();
 		while (sc.hasNext()) {
 			sb.append(sc.next());
 		}
 		descrip = sb.toString();
+		numInStore = sc.nextInt();
+		numAtWarehouse = sc.nextInt();
+		numInTransit = sc.nextInt();
+		numSold = sc.nextInt();
         }
 		
 		catch (Exception e){
