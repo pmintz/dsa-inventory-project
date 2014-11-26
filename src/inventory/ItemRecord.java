@@ -1,12 +1,13 @@
 /** Holds the record in memory for a single item */
 
-package inventory;
-
+ 
+import java.io.*;
 import java.util.*;
+import java.math.*;
 
 public class ItemRecord {
 
-// data members - all private
+  // data members - all private
 
 	/** SKU number - also acts as key value */
 	private int SKU;
@@ -38,12 +39,14 @@ public class ItemRecord {
 	/** descrip - label description of item for sale */
 	private String descrip;
 
-// class methods
+  // class methods
 
-// initialize only from file
-	
+  // initialize only from file
+  
+  /**Added Buffered Reader and changed File(file) to FileReader(file) and added catch and try*/	
 	public ItemRecord(String file) {
-		Scanner sc = new Scanner(new File(file));
+	    try {
+		Scanner sc = new Scanner(new BufferedReader(new FileReader(file)));
 		SKU = sc.nextInt();
 		numInStore = sc.nextInt();
 		numAtWarehouse = sc.nextInt();
@@ -55,6 +58,11 @@ public class ItemRecord {
 			sb.append(sc.next());
 		}
 		descrip = sb.toString();
+        }
+		
+		catch (Exception e){
+    System.out.println(e);
+   }
 	}
 
 	/** sellItem - decrements numInStore
@@ -74,7 +82,9 @@ public class ItemRecord {
 
 	/** orderItem - order more if velocity and stock level adequate */
 	protected void orderItem() {
-		needed = int(salesVelocity * 30); // enough for 30 days
+	    float salesvel;
+	    salesvel = (float) salesVelocity;
+		int needed = Math.round(salesvel * 30); // enough for 30 days
 		if (numInStore > needed) {
 			return;
 		} else {
@@ -91,29 +101,31 @@ public class ItemRecord {
 		numSold = 0;
 	}
 
-// methods for retrieving information
-	
+  // methods for retrieving information
+  /** Added return types*/	
 	/** getPrice - return unit price */
-	public getPrice() {
+	public double getPrice() {    
 		return unitPrice;
 	}
 
 	/** getInStock - return number currently at store */
-	public getInStock() {
+	public int getInStock() {
 		return numInStore;
 	}
 
 	/** getOnOrder - return number in transit */
-	public getOnOrder() {
+	public int getOnOrder() {
 		return numInTransit;
 	}
-
+    /** numAtWarehouse or numInWarehouse?  You had numInWarehouse here in the return but
+     * field declaration said numAtWarehouse
+     */
 	/** getInWarehouse - return number in warehouse */
-	public getInWarehouse() {
-		return numInWarehouse;
+	public int getInWarehouse() {
+		return numAtWarehouse;
 	}
 
-// method to display item data on screen
+  // method to display item data on screen
 
 	public void displayItem() {
 		System.out.println();
@@ -122,20 +134,22 @@ public class ItemRecord {
 		System.out.println(descrip);
 		System.out.println("In stock: " + numInStore);
 		System.out.println("On order: " + numInTransit);
-		System.out.println("In warehouse: " + numInWarehouse);
+		System.out.println("In warehouse: " + numAtWarehouse);
 		System.out.println();	
 	}
 
-// toString - only for writing to file
-
+  // toString - only for writing to file
+  /** Added String result; because result was not defined.  Also changed Integer.toString because (String) was not compiling*/
 	public String toString() {
+	    String result;
 		result = "";
-		result += (String)(SKU) + '\t';
+		result += Integer.toString(SKU) + '\t';
 		result += name + '\t';
 		result += descrip + '\t';
-		result += (String)(numInStore) + '\t';
-		result += (String)(numAtWarehouse) + '\t';
-		result += (String)(numInTransit) + '\n';
+		result += Integer.toString(numInStore) + '\t';
+		result += Integer.toString(numAtWarehouse) + '\t';
+		result += Integer.toString(numInTransit) + '\n';
+		return result;
 	}
 
 } 
