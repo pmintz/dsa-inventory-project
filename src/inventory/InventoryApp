@@ -16,14 +16,4 @@
 
 package inventory;
 
-public class InventoryApp{
 
-public static void main(String[] args) {
-
-	ItemRecord first = new ItemRecord("data.txt");
-	System.out.println("Welcome to ABC Stores POS Software\n");
-	first.displayItem();
-
-}
-
-}

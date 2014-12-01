@@ -1,5 +1,6 @@
 /** Holds the record in memory for a single item */
 
+package inventory;
  
 import java.io.*;
 import java.util.*;
@@ -48,16 +49,17 @@ public class ItemRecord {
 	    try {
 		Scanner sc = new Scanner(new BufferedReader(new FileReader(file)));
 		SKU = sc.nextInt();
-		name = sc.next();
-		StringBuilder sb = new StringBuilder();
-		while (sc.hasNext()) {
-			sb.append(sc.next());
-		}
-		descrip = sb.toString();
 		numInStore = sc.nextInt();
 		numAtWarehouse = sc.nextInt();
 		numInTransit = sc.nextInt();
 		numSold = sc.nextInt();
+		StringBuilder sb = new StringBuilder();
+		name = sc.next();
+		while (sc.hasNext()) {
+			sb.append(sc.next());
+			sb.append(" ");
+		}
+		descrip = sb.toString();
         }
 		
 		catch (Exception e){
